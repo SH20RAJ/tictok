@@ -1,25 +1,69 @@
 
-
-
-let possiblities  = [
-    [1,2,3],
-    [4,5,6],
-    [7,8,9],
-    [1,4,7],
-    [2,5,8],
-    [3,6,9],
-    [1,5,9],
-    [3,5,7]
+  let possiblities = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+  [1, 4, 7],
+  [2, 5, 8],
+  [3, 6, 9],
+  [1, 5, 9],
+  [3, 5, 7],
 ];
 
-let tashi = (a) => document.querySelector(a);
+var x = []
+var y = []
+var disabled = []
 
-
-// tashi bkl
-tashi("#1").innerHTML = "bkl";
-
-
-
+localStorage.chance = "O";
 
 
 
+const checkVictory = () => {
+    possiblities.forEach((p,i) => {
+        var xc = 0, yc = 0;
+        for (let i = 0; i < p.length; i++) {
+            if(x.includes(p[i])) xc++
+            if(y.includes(p[i])) yc++
+        }
+        if(xc == 3) {alert("X WINS"); location.reload()}
+        if(yc == 3) {alert("O WINS"); location.reload()}
+
+            console.log("g",xc,yc);
+
+    })
+}
+
+
+const getChance = (e) => {
+    // console.log("1",localStorage.chance);
+  if (localStorage.chance == "X") {
+    localStorage.chance = "O";
+    y.push(parseInt(e.id))
+    console.log("y",y);
+  } else
+  if (localStorage.chance == "O") {
+    localStorage.chance = "X";
+    x.push(parseInt(e.id))
+    console.log("x",x);
+  }
+  disabled.push(parseInt(e.id))
+//   console.log("2", localStorage.chance);
+
+  return localStorage.chance;
+};
+
+
+document.querySelectorAll(".field").forEach((e, i) => {
+  e.addEventListener("click", () => {
+    select(e);
+  });
+
+});
+
+
+let select = (e) => {
+    if(disabled.includes(parseInt(e.id))) return
+    e.innerHTML = getChance(e);
+    console.log("v c");
+    checkVictory()
+};
