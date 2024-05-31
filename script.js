@@ -66,4 +66,5 @@ let select = (e) => {
     e.innerHTML = getChance(e);
     console.log("v c");
     checkVictory()
+    if(disabled.length >= 9){ location.reload()}
 };
